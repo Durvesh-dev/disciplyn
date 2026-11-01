@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+ml/run_output/
+ml/data/trades.csv
+ml/data/trades.csv.gz
+*.zip
+.ipynb_checkpoints/

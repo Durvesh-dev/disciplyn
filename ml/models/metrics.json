@@ -1,0 +1,1066 @@
+{
+  "stop_loss": {
+    "tag(s)": "Ignoring Stop-Losses / Stop-Loss Adherence",
+    "predicts": "Ignoring Stop-Losses",
+    "type": "pair",
+    "opposite": "Stop-Loss Adherence",
+    "algorithm": "HistGradientBoosting",
+    "best_params": {
+      "min_samples_leaf": 20,
+      "max_leaf_nodes": 15,
+      "max_iter": 400,
+      "learning_rate": 0.03,
+      "l2_regularization": 3.0
+    },
+    "cv_roc_auc_tuned": 0.9508,
+    "threshold": 0.49,
+    "train_roc_auc": 0.9557,
+    "train_test_gap": 0.003,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8774,
+      "precision": 0.8184,
+      "recall": 0.8834,
+      "f1": 0.8496,
+      "roc_auc": 0.9528,
+      "pr_auc": 0.9297,
+      "brier": 0.0857
+    },
+    "confusion_matrix": [
+      [
+        3054,
+        442
+      ],
+      [
+        263,
+        1992
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.403,
+    "features": [
+      "sl_set_rate",
+      "sl_modified_rate",
+      "sl_widened_rate",
+      "sl_honor_rate",
+      "avg_loss_r",
+      "loss_beyond_1r_rate",
+      "worst_loss_r"
+    ],
+    "feature_importance": [
+      [
+        "sl_honor_rate",
+        0.399
+      ],
+      [
+        "sl_set_rate",
+        0.0179
+      ],
+      [
+        "sl_modified_rate",
+        0.0053
+      ],
+      [
+        "worst_loss_r",
+        0.0015
+      ],
+      [
+        "avg_loss_r",
+        0.0004
+      ],
+      [
+        "loss_beyond_1r_rate",
+        0.0001
+      ],
+      [
+        "sl_widened_rate",
+        0.0
+      ]
+    ],
+    "train_seconds": 34.1
+  },
+  "frequency": {
+    "tag(s)": "Overtrading / Controlled Trading Frequency",
+    "predicts": "Overtrading",
+    "type": "pair",
+    "opposite": "Controlled Trading Frequency",
+    "algorithm": "HistGradientBoosting",
+    "best_params": {
+      "min_samples_leaf": 10,
+      "max_leaf_nodes": 15,
+      "max_iter": 400,
+      "learning_rate": 0.12,
+      "l2_regularization": 3.0
+    },
+    "cv_roc_auc_tuned": 0.9816,
+    "threshold": 0.49,
+    "train_roc_auc": 0.9855,
+    "train_test_gap": 0.0005,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.9308,
+      "precision": 0.9104,
+      "recall": 0.9336,
+      "f1": 0.9218,
+      "roc_auc": 0.985,
+      "pr_auc": 0.9811,
+      "brier": 0.0481
+    },
+    "confusion_matrix": [
+      [
+        3006,
+        231
+      ],
+      [
+        167,
+        2347
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.462,
+    "features": [
+      "trades_per_day",
+      "max_trades_per_day",
+      "median_gap_min",
+      "off_plan_rate",
+      "trades_after_daily_limit_rate",
+      "low_quality_entry_rate",
+      "active_days_ratio"
+    ],
+    "feature_importance": [
+      [
+        "trades_per_day",
+        0.239
+      ],
+      [
+        "active_days_ratio",
+        0.0489
+      ],
+      [
+        "max_trades_per_day",
+        0.0072
+      ],
+      [
+        "median_gap_min",
+        0.0036
+      ],
+      [
+        "trades_after_daily_limit_rate",
+        0.0014
+      ],
+      [
+        "off_plan_rate",
+        0.0009
+      ],
+      [
+        "low_quality_entry_rate",
+        0.0007
+      ]
+    ],
+    "train_seconds": 24.3
+  },
+  "discipline": {
+    "tag(s)": "Lack of Discipline / Disciplined Trading",
+    "predicts": "Lack of Discipline",
+    "type": "pair",
+    "opposite": "Disciplined Trading",
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.001,
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.01
+    },
+    "cv_roc_auc_tuned": 0.9838,
+    "threshold": 0.47,
+    "train_roc_auc": 0.9847,
+    "train_test_gap": 0.0006,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.9298,
+      "precision": 0.9053,
+      "recall": 0.9232,
+      "f1": 0.9142,
+      "roc_auc": 0.9841,
+      "pr_auc": 0.9784,
+      "brier": 0.05
+    },
+    "confusion_matrix": [
+      [
+        3196,
+        225
+      ],
+      [
+        179,
+        2151
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.429,
+    "features": [
+      "sl_set_rate",
+      "target_set_rate",
+      "off_plan_rate",
+      "trades_after_daily_limit_rate",
+      "sl_modified_rate",
+      "q_discipline",
+      "strategy_count"
+    ],
+    "feature_importance": [
+      [
+        "target_set_rate",
+        0.1637
+      ],
+      [
+        "q_discipline",
+        0.0291
+      ],
+      [
+        "sl_set_rate",
+        0.0282
+      ],
+      [
+        "sl_modified_rate",
+        0.0039
+      ],
+      [
+        "trades_after_daily_limit_rate",
+        0.0029
+      ],
+      [
+        "off_plan_rate",
+        0.0014
+      ],
+      [
+        "strategy_count",
+        0.0011
+      ]
+    ],
+    "train_seconds": 24.6
+  },
+  "profit_exit": {
+    "tag(s)": "Greed / Profit Booking",
+    "predicts": "Greed",
+    "type": "pair",
+    "opposite": "Profit Booking",
+    "algorithm": "RandomForest",
+    "best_params": {
+      "n_estimators": 250,
+      "min_samples_leaf": 5,
+      "max_features": 0.5,
+      "max_depth": 8
+    },
+    "cv_roc_auc_tuned": 0.9531,
+    "threshold": 0.47,
+    "train_roc_auc": 0.9664,
+    "train_test_gap": 0.0152,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8729,
+      "precision": 0.831,
+      "recall": 0.8891,
+      "f1": 0.8591,
+      "roc_auc": 0.9513,
+      "pr_auc": 0.9402,
+      "brier": 0.0888
+    },
+    "confusion_matrix": [
+      [
+        2792,
+        453
+      ],
+      [
+        278,
+        2228
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.44,
+    "features": [
+      "target_held_rate",
+      "giveback_ratio",
+      "win_hold_vs_median",
+      "target_exit_rate",
+      "avg_win_r",
+      "winners_turned_losers_rate"
+    ],
+    "feature_importance": [
+      [
+        "target_held_rate",
+        0.081
+      ],
+      [
+        "giveback_ratio",
+        0.0305
+      ],
+      [
+        "target_exit_rate",
+        0.0198
+      ],
+      [
+        "avg_win_r",
+        0.0137
+      ],
+      [
+        "winners_turned_losers_rate",
+        0.0025
+      ],
+      [
+        "win_hold_vs_median",
+        0.0004
+      ]
+    ],
+    "train_seconds": 137.6
+  },
+  "entry_timing": {
+    "tag(s)": "FOMO / Patience",
+    "predicts": "FOMO",
+    "type": "pair",
+    "opposite": "Patience",
+    "algorithm": "LogisticRegression",
+    "best_params": {
+      "penalty": "l2",
+      "C": 3
+    },
+    "cv_roc_auc_tuned": 0.9679,
+    "threshold": 0.44,
+    "train_roc_auc": 0.9681,
+    "train_test_gap": -0.0019,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.9038,
+      "precision": 0.8779,
+      "recall": 0.9123,
+      "f1": 0.8948,
+      "roc_auc": 0.97,
+      "pr_auc": 0.9662,
+      "brier": 0.0677
+    },
+    "confusion_matrix": [
+      [
+        2846,
+        327
+      ],
+      [
+        226,
+        2352
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.455,
+    "features": [
+      "chase_entry_rate",
+      "avg_pre_entry_move",
+      "avg_entry_volume_z",
+      "extreme_rsi_entry_rate",
+      "q_impulsivity",
+      "chase_win_rate_gap"
+    ],
+    "feature_importance": [
+      [
+        "extreme_rsi_entry_rate",
+        0.4389
+      ],
+      [
+        "q_impulsivity",
+        0.0064
+      ],
+      [
+        "avg_entry_volume_z",
+        0.0001
+      ],
+      [
+        "chase_entry_rate",
+        0.0
+      ],
+      [
+        "avg_pre_entry_move",
+        0.0
+      ],
+      [
+        "chase_win_rate_gap",
+        -0.0
+      ]
+    ],
+    "train_seconds": 0.8
+  },
+  "leverage": {
+    "tag(s)": "Overleveraging / Risk Management",
+    "predicts": "Overleveraging",
+    "type": "pair",
+    "opposite": "Risk Management",
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.003,
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.0001
+    },
+    "cv_roc_auc_tuned": 0.9105,
+    "threshold": 0.44,
+    "train_roc_auc": 0.9103,
+    "train_test_gap": -0.0054,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8348,
+      "precision": 0.7594,
+      "recall": 0.8374,
+      "f1": 0.7965,
+      "roc_auc": 0.9156,
+      "pr_auc": 0.872,
+      "brier": 0.1134
+    },
+    "confusion_matrix": [
+      [
+        2942,
+        589
+      ],
+      [
+        361,
+        1859
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.389,
+    "features": [
+      "avg_leverage",
+      "max_leverage",
+      "p90_leverage",
+      "avg_risk_pct_capital",
+      "max_drawdown_pct",
+      "high_leverage_rate"
+    ],
+    "feature_importance": [
+      [
+        "high_leverage_rate",
+        0.0466
+      ],
+      [
+        "avg_risk_pct_capital",
+        0.0227
+      ],
+      [
+        "avg_leverage",
+        0.0205
+      ],
+      [
+        "p90_leverage",
+        0.0137
+      ],
+      [
+        "max_leverage",
+        0.0015
+      ],
+      [
+        "max_drawdown_pct",
+        0.0008
+      ]
+    ],
+    "train_seconds": 22.4
+  },
+  "revenge": {
+    "tag(s)": "Revenge Trading",
+    "predicts": "Revenge Trading",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "HistGradientBoosting",
+    "best_params": {
+      "min_samples_leaf": 20,
+      "max_leaf_nodes": 15,
+      "max_iter": 400,
+      "learning_rate": 0.03,
+      "l2_regularization": 3.0
+    },
+    "cv_roc_auc_tuned": 0.917,
+    "threshold": 0.47,
+    "train_roc_auc": 0.9264,
+    "train_test_gap": 0.0059,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8322,
+      "precision": 0.7776,
+      "recall": 0.8479,
+      "f1": 0.8112,
+      "roc_auc": 0.9205,
+      "pr_auc": 0.8998,
+      "brier": 0.1143
+    },
+    "confusion_matrix": [
+      [
+        2713,
+        593
+      ],
+      [
+        372,
+        2073
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.433,
+    "features": [
+      "gap_after_loss_vs_win",
+      "quick_reentry_after_loss_rate",
+      "size_after_loss_vs_win",
+      "loss_streak_trade_rate",
+      "q_impulsivity",
+      "pnl_after_loss_r"
+    ],
+    "feature_importance": [
+      [
+        "quick_reentry_after_loss_rate",
+        0.2219
+      ],
+      [
+        "q_impulsivity",
+        0.0615
+      ],
+      [
+        "size_after_loss_vs_win",
+        0.0137
+      ],
+      [
+        "loss_streak_trade_rate",
+        0.005
+      ],
+      [
+        "pnl_after_loss_r",
+        0.0032
+      ],
+      [
+        "gap_after_loss_vs_win",
+        0.0005
+      ]
+    ],
+    "train_seconds": 27.9
+  },
+  "panic": {
+    "tag(s)": "Panic Selling",
+    "predicts": "Panic Selling",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.003,
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.001
+    },
+    "cv_roc_auc_tuned": 0.9116,
+    "threshold": 0.4,
+    "train_roc_auc": 0.9121,
+    "train_test_gap": 0.0004,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8258,
+      "precision": 0.739,
+      "recall": 0.8562,
+      "f1": 0.7933,
+      "roc_auc": 0.9117,
+      "pr_auc": 0.8754,
+      "brier": 0.1157
+    },
+    "confusion_matrix": [
+      [
+        2826,
+        679
+      ],
+      [
+        323,
+        1923
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.406,
+    "features": [
+      "early_exit_rate",
+      "early_exit_in_selloff_rate",
+      "post_exit_recovery_rate",
+      "avg_exit_volume_z",
+      "small_loss_short_hold_rate",
+      "q_emotional"
+    ],
+    "feature_importance": [
+      [
+        "early_exit_rate",
+        0.101
+      ],
+      [
+        "q_emotional",
+        0.0341
+      ],
+      [
+        "small_loss_short_hold_rate",
+        0.019
+      ],
+      [
+        "early_exit_in_selloff_rate",
+        0.0181
+      ],
+      [
+        "avg_exit_volume_z",
+        0.0074
+      ],
+      [
+        "post_exit_recovery_rate",
+        0.0006
+      ]
+    ],
+    "train_seconds": 26.2
+  },
+  "loss_aversion": {
+    "tag(s)": "Loss Aversion",
+    "predicts": "Loss Aversion",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.001,
+      "hidden_layer_sizes": [
+        128,
+        64
+      ],
+      "alpha": 0.001
+    },
+    "cv_roc_auc_tuned": 0.9118,
+    "threshold": 0.36,
+    "train_roc_auc": 0.9154,
+    "train_test_gap": 0.001,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8152,
+      "precision": 0.7168,
+      "recall": 0.8835,
+      "f1": 0.7914,
+      "roc_auc": 0.9145,
+      "pr_auc": 0.8821,
+      "brier": 0.1155
+    },
+    "confusion_matrix": [
+      [
+        2671,
+        797
+      ],
+      [
+        266,
+        2017
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.411,
+    "features": [
+      "loss_hold_vs_win_hold",
+      "averaged_down_rate",
+      "avg_loss_r",
+      "loss_beyond_1r_rate",
+      "late_exit_loss_rate",
+      "avg_win_r"
+    ],
+    "feature_importance": [
+      [
+        "averaged_down_rate",
+        0.146
+      ],
+      [
+        "late_exit_loss_rate",
+        0.0847
+      ],
+      [
+        "loss_beyond_1r_rate",
+        0.0301
+      ],
+      [
+        "avg_loss_r",
+        0.0241
+      ],
+      [
+        "loss_hold_vs_win_hold",
+        0.0179
+      ],
+      [
+        "avg_win_r",
+        0.007
+      ]
+    ],
+    "train_seconds": 31.0
+  },
+  "confirmation_bias": {
+    "tag(s)": "Confirmation Bias",
+    "predicts": "Confirmation Bias",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "HistGradientBoosting",
+    "best_params": {
+      "min_samples_leaf": 20,
+      "max_leaf_nodes": 15,
+      "max_iter": 400,
+      "learning_rate": 0.03,
+      "l2_regularization": 3.0
+    },
+    "cv_roc_auc_tuned": 0.9641,
+    "threshold": 0.51,
+    "train_roc_auc": 0.9693,
+    "train_test_gap": 0.0098,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8872,
+      "precision": 0.8611,
+      "recall": 0.8728,
+      "f1": 0.8669,
+      "roc_auc": 0.9595,
+      "pr_auc": 0.9504,
+      "brier": 0.0802
+    },
+    "confusion_matrix": [
+      [
+        2988,
+        341
+      ],
+      [
+        308,
+        2114
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.452,
+    "features": [
+      "same_idea_reentry_rate",
+      "against_macd_rate",
+      "against_sentiment_rate",
+      "q_confirmation_bias",
+      "side_concentration"
+    ],
+    "feature_importance": [
+      [
+        "q_confirmation_bias",
+        0.1063
+      ],
+      [
+        "same_idea_reentry_rate",
+        0.0709
+      ],
+      [
+        "against_sentiment_rate",
+        0.0321
+      ],
+      [
+        "against_macd_rate",
+        0.0066
+      ],
+      [
+        "side_concentration",
+        0.0002
+      ]
+    ],
+    "train_seconds": 25.7
+  },
+  "emotional_stability": {
+    "tag(s)": "Emotional Stability",
+    "predicts": "Emotional Stability",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.001,
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.0001
+    },
+    "cv_roc_auc_tuned": 0.9152,
+    "threshold": 0.46,
+    "train_roc_auc": 0.9209,
+    "train_test_gap": 0.0131,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8209,
+      "precision": 0.8226,
+      "recall": 0.8937,
+      "f1": 0.8567,
+      "roc_auc": 0.9078,
+      "pr_auc": 0.9364,
+      "brier": 0.1206
+    },
+    "confusion_matrix": [
+      [
+        1643,
+        664
+      ],
+      [
+        366,
+        3078
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.587,
+    "features": [
+      "gap_after_loss_vs_win",
+      "size_after_loss_vs_win",
+      "early_exit_rate",
+      "chase_entry_rate",
+      "daily_pnl_volatility_pct",
+      "q_emotional",
+      "q_impulsivity"
+    ],
+    "feature_importance": [
+      [
+        "q_emotional",
+        0.1949
+      ],
+      [
+        "chase_entry_rate",
+        0.0817
+      ],
+      [
+        "early_exit_rate",
+        0.0316
+      ],
+      [
+        "daily_pnl_volatility_pct",
+        0.0063
+      ],
+      [
+        "q_impulsivity",
+        0.0043
+      ],
+      [
+        "size_after_loss_vs_win",
+        0.003
+      ],
+      [
+        "gap_after_loss_vs_win",
+        -0.0001
+      ]
+    ],
+    "train_seconds": 26.7
+  },
+  "consistent_sizing": {
+    "tag(s)": "Consistent Position Sizing",
+    "predicts": "Consistent Position Sizing",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.003,
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "alpha": 0.001
+    },
+    "cv_roc_auc_tuned": 0.9423,
+    "threshold": 0.4,
+    "train_roc_auc": 0.9435,
+    "train_test_gap": -0.0,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8559,
+      "precision": 0.8315,
+      "recall": 0.9266,
+      "f1": 0.8765,
+      "roc_auc": 0.9436,
+      "pr_auc": 0.9572,
+      "brier": 0.0962
+    },
+    "confusion_matrix": [
+      [
+        1980,
+        596
+      ],
+      [
+        233,
+        2942
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.557,
+    "features": [
+      "leverage_cv",
+      "risk_cv",
+      "size_after_loss_vs_win",
+      "max_to_median_size"
+    ],
+    "feature_importance": [
+      [
+        "leverage_cv",
+        0.5811
+      ],
+      [
+        "max_to_median_size",
+        0.0641
+      ],
+      [
+        "risk_cv",
+        0.0201
+      ],
+      [
+        "size_after_loss_vs_win",
+        0.0038
+      ]
+    ],
+    "train_seconds": 28.1
+  },
+  "learning": {
+    "tag(s)": "Learning from Losses",
+    "predicts": "Learning from Losses",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.003,
+      "hidden_layer_sizes": [
+        64,
+        64,
+        32
+      ],
+      "alpha": 0.001
+    },
+    "cv_roc_auc_tuned": 0.9745,
+    "threshold": 0.47,
+    "train_roc_auc": 0.9763,
+    "train_test_gap": 0.0035,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.9068,
+      "precision": 0.8832,
+      "recall": 0.9426,
+      "f1": 0.9119,
+      "roc_auc": 0.9728,
+      "pr_auc": 0.9747,
+      "brier": 0.0656
+    },
+    "confusion_matrix": [
+      [
+        2440,
+        367
+      ],
+      [
+        169,
+        2775
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.489,
+    "features": [
+      "journal_loss_rate",
+      "mistake_rate_trend",
+      "second_half_vs_first_half_pnl",
+      "q_learning",
+      "repeat_mistake_rate"
+    ],
+    "feature_importance": [
+      [
+        "journal_loss_rate",
+        0.3312
+      ],
+      [
+        "q_learning",
+        0.0475
+      ],
+      [
+        "repeat_mistake_rate",
+        0.0025
+      ],
+      [
+        "second_half_vs_first_half_pnl",
+        0.0002
+      ],
+      [
+        "mistake_rate_trend",
+        0.0001
+      ]
+    ],
+    "train_seconds": 26.8
+  },
+  "strategic_consistency": {
+    "tag(s)": "Strategic Consistency",
+    "predicts": "Strategic Consistency",
+    "type": "single",
+    "opposite": null,
+    "algorithm": "MLP (Neural Net)",
+    "best_params": {
+      "learning_rate_init": 0.003,
+      "hidden_layer_sizes": [
+        128,
+        64
+      ],
+      "alpha": 0.0001
+    },
+    "cv_roc_auc_tuned": 0.9056,
+    "threshold": 0.43,
+    "train_roc_auc": 0.9063,
+    "train_test_gap": 0.0001,
+    "fit_status": "good fit",
+    "test": {
+      "accuracy": 0.8233,
+      "precision": 0.7869,
+      "recall": 0.9152,
+      "f1": 0.8462,
+      "roc_auc": 0.9062,
+      "pr_auc": 0.9024,
+      "brier": 0.1221
+    },
+    "confusion_matrix": [
+      [
+        1939,
+        757
+      ],
+      [
+        259,
+        2796
+      ]
+    ],
+    "n_train_windows": 23124,
+    "n_test_windows": 5751,
+    "positive_rate_train": 0.523,
+    "features": [
+      "strategy_count",
+      "strategy_switch_rate",
+      "switch_after_loss_rate",
+      "top_strategy_share",
+      "off_plan_rate"
+    ],
+    "feature_importance": [
+      [
+        "switch_after_loss_rate",
+        0.2742
+      ],
+      [
+        "strategy_switch_rate",
+        0.0589
+      ],
+      [
+        "strategy_count",
+        0.025
+      ],
+      [
+        "top_strategy_share",
+        0.0016
+      ],
+      [
+        "off_plan_rate",
+        0.001
+      ]
+    ],
+    "train_seconds": 25.2
+  }
+}

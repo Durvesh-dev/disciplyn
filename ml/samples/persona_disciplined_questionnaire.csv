@@ -1,0 +1,11 @@
+trader_id,set_no,question_no,construct,reverse_scored,question,answer
+TR04140,5,1,impulsivity,0,I often enter a trade quickly so I don't miss a move.,1
+TR04140,5,2,impulsivity,0,"After a loss, I want to get back into the market immediately.",1
+TR04140,5,3,confirmation_bias,0,"Once I have a view on a stock, I mostly look for news that supports it.",1
+TR04140,5,4,confirmation_bias,1,I actively look for reasons my trade idea could be wrong.,5
+TR04140,5,5,emotional,0,"My emotions (fear, frustration, excitement) affect my trading decisions.",3
+TR04140,5,6,emotional,1,I stay calm when a trade goes against me.,4
+TR04140,5,7,discipline,1,"I follow a written trading plan with entry, stop-loss and target.",5
+TR04140,5,8,discipline,0,I break my own rules when I feel confident.,2
+TR04140,5,9,learning,1,I review my losing trades and note what went wrong.,4
+TR04140,5,10,learning,0,I keep repeating the same mistakes.,1

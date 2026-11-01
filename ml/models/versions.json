@@ -1,0 +1,17 @@
+{
+  "python": "3.13.18",
+  "sklearn": "1.9.1",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5",
+  "args": {
+    "out": "/home/claude/disciplyn/ml/run_output",
+    "traders": 10000,
+    "days": 60,
+    "seed": 42,
+    "cv_folds": 5,
+    "tune_iter": 15,
+    "quick": false,
+    "fresh": true,
+    "data_dir": "/home/claude/disciplyn/ml/data"
+  }
+}
