@@ -112,28 +112,38 @@ def fallback_answer(ctx, neg, docs, query):
     return "\n".join(out)
 
 
+async def _offline_stream(ctx, neg, docs, query):
+    import asyncio
+    for word in fallback_answer(ctx, neg, docs, query).split(" "):
+        yield word + " "
+        await asyncio.sleep(0.015)
+
+
 async def stream_answer(analysis: dict, messages: list[dict]):
     query = messages[-1]["content"] if messages else ""
     ctx, neg, docs = build_context(analysis, query)
     ep = _llm_endpoint()
-    if ep is None:
-        import asyncio
-        for word in fallback_answer(ctx, neg, docs, query).split(" "):
-            yield word + " "
-            await asyncio.sleep(0.015)
-        return
-    url, key, model = ep
-    payload = {"model": model, "stream": True, "temperature": 0.4,
-               "messages": [{"role": "system", "content": SYSTEM + "\n\nTRADER CONTEXT (JSON):\n" + json.dumps(ctx, default=str)}]
-               + messages[-10:]}
-    async with httpx.AsyncClient(timeout=60) as client:
-        async with client.stream("POST", url, json=payload, headers={"Authorization": f"Bearer {key}"}) as r:
-            async for line in r.aiter_lines():
-                if not line.startswith("data: ") or line.endswith("[DONE]"):
-                    continue
-                try:
-                    delta = json.loads(line[6:])["choices"][0]["delta"].get("content")
-                except Exception:
-                    delta = None
-                if delta:
-                    yield delta
+    sent = False
+    if ep is not None and httpx is not None:
+        url, key, model = ep
+        payload = {"model": model, "stream": True, "temperature": 0.4,
+                   "messages": [{"role": "system", "content": SYSTEM + "\n\nTRADER CONTEXT (JSON):\n" + json.dumps(ctx, default=str)}]
+                   + messages[-10:]}
+        try:
+            async with httpx.AsyncClient(timeout=60) as client:
+                async with client.stream("POST", url, json=payload, headers={"Authorization": f"Bearer {key}"}) as r:
+                    async for line in r.aiter_lines():
+                        if r.status_code != 200 or not line.startswith("data: ") or line.endswith("[DONE]"):
+                            continue
+                        try:
+                            delta = json.loads(line[6:])["choices"][0]["delta"].get("content")
+                        except Exception:
+                            delta = None
+                        if delta:
+                            sent = True
+                            yield delta
+        except httpx.HTTPError:
+            pass
+    if not sent:       # no key, bad key or no internet: the rule-based coach still answers
+        async for chunk in _offline_stream(ctx, neg, docs, query):
+            yield chunk

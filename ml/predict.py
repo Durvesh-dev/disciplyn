@@ -11,10 +11,11 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from features import MODELS, trader_features
+from features import ALL_FEATURES, MODELS, trader_features
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 _MODELS = None
+UNCERTAIN_BAND = 0.1   # |p - threshold| below this -> "too close to call"
 
 
 def load_models(model_dir=os.path.join(HERE, "models")):
@@ -24,33 +25,65 @@ def load_models(model_dir=os.path.join(HERE, "models")):
     return _MODELS
 
 
-def analyze(trades: pd.DataFrame, questionnaire: pd.DataFrame | None = None, uncertain_band=(0.4, 0.6)):
-    feats = trader_features(trades, questionnaire)
-    X = pd.DataFrame([feats])
-    tags, models_out = [], []
+def display_name(name: str) -> str:
+    cfg = MODELS[name]
+    return f"{cfg['negative']} / {cfg['positive']}" if cfg["type"] == "pair" else cfg["tag"]
+
+
+def predict_from_features(features: dict) -> dict:
+    """Run the 14 models on ONE already-engineered feature row.
+
+    `features` maps feature name -> number (or None/NaN when unknown, e.g. a user who
+    skipped the questionnaire). Missing keys become NaN. This is the single code path
+    used by both analyze() (features computed from a trade book) and the /api/predict-features
+    endpoint (features typed in by hand), so there is no skew between them.
+    """
+    row = {f: features.get(f, np.nan) for f in ALL_FEATURES}
+    X = pd.DataFrame([row]).astype(float)
+
+    tags, models_out, predictions = [], [], []
     for name, b in load_models().items():
         cfg = b["config"]
         p = float(b["model"].predict_proba(X[b["features"]])[:, 1][0])
         thr = float(b.get("threshold", 0.5))          # tuned decision threshold per model
-        uncertain = abs(p - thr) < 0.1                # too close to call -> "uncertain"
+        uncertain = abs(p - thr) < UNCERTAIN_BAND     # too close to call -> "uncertain"
+        p3 = round(p, 3)
         if cfg["type"] == "pair":
-            tags.append({"tag": cfg["negative"], "polarity": "negative", "probability": round(p, 3),
+            tags.append({"tag": cfg["negative"], "polarity": "negative", "probability": p3,
                          "present": p >= thr and not uncertain, "model": name})
             tags.append({"tag": cfg["positive"], "polarity": "positive", "probability": round(1 - p, 3),
                          "present": p < thr and not uncertain, "model": name})
+            predicted_tag = cfg["negative"] if p >= thr else cfg["positive"]
+            polarity = "negative" if p >= thr else "positive"
         else:
-            tags.append({"tag": cfg["tag"], "polarity": cfg["polarity"], "probability": round(p, 3),
+            tags.append({"tag": cfg["tag"], "polarity": cfg["polarity"], "probability": p3,
                          "present": p >= thr and not uncertain, "model": name})
-        models_out.append({"model": name, "probability": round(p, 3), "uncertain": uncertain})
+            predicted_tag = cfg["tag"] if p >= thr else f"Not {cfg['tag']}"
+            flip = {"negative": "positive", "positive": "negative"}
+            polarity = cfg["polarity"] if p >= thr else flip[cfg["polarity"]]
+        models_out.append({"model": name, "probability": p3, "uncertain": uncertain})
+        predictions.append({
+            "model": name, "display_name": display_name(name), "type": cfg["type"],
+            "algorithm": b.get("algorithm", "unknown"), "probability": p3, "threshold": round(thr, 3),
+            "predicted_tag": predicted_tag, "polarity": polarity, "uncertain": uncertain,
+            "confidence": round(p if p >= thr else 1 - p, 3),
+            "features_used": {f: (None if pd.isna(row[f]) else float(row[f])) for f in b["features"]},
+        })
 
     # Behaviour score 0-100: average "goodness" across the 14 dimensions
     good = []
-    for name, b in load_models().items():
-        cfg = b["config"]
-        p = next(m["probability"] for m in models_out if m["model"] == name)
+    for m in models_out:
+        cfg = MODELS[m["model"]]
         bad = cfg["type"] == "pair" or cfg.get("polarity") == "negative"
-        good.append(1 - p if bad else p)
+        good.append(1 - m["probability"] if bad else m["probability"])
     score = int(round(100 * float(np.mean(good))))
+
+    return {"behaviour_score": score, "tags": tags, "models": models_out, "predictions": predictions}
+
+
+def analyze(trades: pd.DataFrame, questionnaire: pd.DataFrame | None = None, uncertain_band=(0.4, 0.6)):
+    feats = trader_features(trades, questionnaire)
+    out = predict_from_features(feats)
 
     # top evidence for the LLM / dashboard
     stats = {
@@ -68,7 +101,7 @@ def analyze(trades: pd.DataFrame, questionnaire: pd.DataFrame | None = None, unc
         "off_plan_rate": round(feats["off_plan_rate"], 3), "journal_loss_rate": round(feats["journal_loss_rate"], 3),
         "strategy_count": int(feats["strategy_count"]),
     }
-    return {"behaviour_score": score, "tags": tags, "models": models_out, "stats": stats,
+    return {"behaviour_score": out["behaviour_score"], "tags": out["tags"], "models": out["models"], "stats": stats,
             "has_questionnaire": questionnaire is not None and len(questionnaire) > 0}
 
 

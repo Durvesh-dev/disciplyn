@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disciplyn: Trader Behaviour Prediction</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">D</div>
+      <div>
+        <h1>Disciplyn: Trader Behaviour Prediction</h1>
+        <p>14 ML models &middot; 20 behaviour tags &middot; trained on 1.94M simulated trades</p>
+      </div>
+    </div>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="error" class="error" role="alert" hidden></div>
+
+  <section aria-labelledby="profiles-title">
+    <h2 class="section-title" id="profiles-title">Choose a trader to analyse</h2>
+    <div class="profiles" id="profiles"></div>
+  </section>
+
+  <section class="summary" id="summary" aria-live="polite">
+    <div class="ring" aria-hidden="true">
+      <svg viewBox="0 0 80 80">
+        <circle class="ring-track" cx="40" cy="40" r="34"></circle>
+        <circle class="ring-value" id="ring-value" cx="40" cy="40" r="34"></circle>
+      </svg>
+      <div class="ring-text"><b id="score-num">&ndash;</b><span>/100</span></div>
+    </div>
+    <div class="verdict">
+      <div class="eyebrow">Behaviour Score <span id="score-delta" class="delta"></span></div>
+      <div class="verdict-title" id="verdict-title">Running the models&hellip;</div>
+      <div class="verdict-detail" id="score-summary"></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="btn-reset" type="button">Reset</button>
+      <button class="btn btn-primary" id="btn-predict" type="button">Predict</button>
+    </div>
+    <div class="stale" id="stale" hidden>You changed the inputs. Press <b>Predict</b> to update these results.</div>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-results" role="tab" type="button" aria-selected="true" aria-controls="panel-results">Predictions</button>
+    <button class="tab" id="tab-inputs" role="tab" type="button" aria-selected="false" aria-controls="panel-inputs">
+      Model inputs <span class="tab-count" id="edited-count" hidden></span>
+    </button>
+    <button class="tab" id="tab-coach" role="tab" type="button" aria-selected="false" aria-controls="panel-coach">AI Coach</button>
+  </div>
+
+  <section id="panel-results" role="tabpanel" aria-labelledby="tab-results">
+    <div class="filters" id="filters"></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="panel-inputs" role="tabpanel" aria-labelledby="tab-inputs" hidden>
+    <div class="inputs-layout">
+      <nav class="group-nav" id="group-nav" aria-label="Feature groups"></nav>
+      <div class="inputs-main">
+        <div class="inputs-tools">
+          <input type="search" id="search" placeholder="Search all 66 features" aria-label="Search features">
+          <label class="check"><input type="checkbox" id="only-edited"> Edited only</label>
+        </div>
+        <h3 class="group-title" id="group-title"></h3>
+        <div id="fields"></div>
+        <p class="empty" id="no-fields" hidden>No features match.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-coach" role="tabpanel" aria-labelledby="tab-coach" hidden>
+    <div class="coach">
+      <p class="coach-intro">The coach explains the current trader's results, using the predicted tags and a knowledge base of trading-psychology principles.</p>
+      <div class="coach-log" id="coach-log" aria-live="polite"></div>
+      <div class="coach-suggest" id="coach-suggest"></div>
+      <form class="coach-form" id="coach-form">
+        <input type="text" id="coach-input" placeholder="Ask about this trader's behaviour" aria-label="Question for the coach" autocomplete="off">
+        <button class="btn btn-primary" id="coach-send" type="submit">Send</button>
+      </form>
+      <p class="coach-note">Behavioural coaching only, not investment advice. Uses Gemini or Groq if a valid API key is set, otherwise the built-in offline coach.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap footer">Final-year project. Trained on simulated data. Behavioural coaching only, not investment advice.</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

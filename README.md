@@ -37,6 +37,30 @@ Without a key, the chat uses a built-in rule-based coach that follows the same R
 
 Retrain from scratch: `cd ml && python generate_dataset.py && python build_features.py && python train.py` (about 15 min total).
 
+## Run the prediction demo (feature -> prediction web page)
+
+One command, no Node/npm, works offline:
+
+```
+.venv\Scripts\activate
+cd backend
+uvicorn main:app --port 8000
+```
+
+then open http://localhost:8000
+
+The page shows all 66 model inputs as editable fields, grouped by behaviour area and prefilled
+from the **Impulsive trader** preset. Press **Predict** (or click a preset, which predicts
+automatically) to run all 14 models and get 14 prediction cards plus the Behaviour Score.
+Presets: Impulsive trader (score 7), Disciplined trader (94), Mixed trader (80), Dataset median (67).
+`?preset=disciplined` in the URL opens straight on that trader. Questionnaire fields may be left
+blank: they are sent as null and become NaN, exactly like a user who never answered it.
+
+Endpoints behind the page: `GET /api/feature-schema` (fields, percentile ranges, presets, model
+metadata) and `POST /api/predict-features` (`{"features": {name: number | null}}`). Both run the
+same `predict_from_features()` in `ml/predict.py` that `analyze()` uses, so the page and the
+notebooks always agree. `python ml/test_predict_features.py` asserts that parity.
+
 ## The 14 models (20 tags)
 
 Six mutually exclusive pairs each share **one** model (P(negative), positive = 1 − P):
